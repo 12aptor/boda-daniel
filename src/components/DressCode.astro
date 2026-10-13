@@ -1,0 +1,98 @@
+---
+// Código de Vestimenta con guía de etiqueta y paleta de colores sugerida
+const suggestedColors = [
+  { name: "Azul Medianoche", hex: "#132446" },
+  { name: "Oro Viejo", hex: "#D4AF37" },
+  { name: "Champagne", hex: "#D8CBB9" },
+  { name: "Verde Olivo", hex: "#556B2F" },
+  { name: "Terracota", hex: "#B86B53" },
+  { name: "Gris Oxford", hex: "#3A4750" }
+];
+---
+
+<section id="dresscode" class="py-24 px-4 sm:px-6 relative z-10 bg-white">
+  <div class="max-w-4xl mx-auto">
+    <!-- Encabezado con Caligrafía Dorada -->
+    <div class="text-center mb-16">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#132446]/5 border border-[#D4AF37]/40 mb-2">
+        <span class="text-[10px] uppercase tracking-[0.25em] text-[#132446] font-semibold">Etiqueta & Estilo</span>
+      </div>
+      <h2 class="font-calligraphy text-4xl sm:text-6xl md:text-7xl text-[#D4AF37] font-normal mb-1">
+        Código de Vestimenta
+      </h2>
+      <div class="text-[#D4AF37] text-xs mb-3">💛</div>
+      <p class="font-editorial text-2xl sm:text-3xl text-[#132446] italic font-light mb-2">
+        Rigurosa Etiqueta / Black Tie Optional
+      </p>
+      <p class="text-sm text-[#64748B] max-w-md mx-auto">
+        Queremos que luzcas espectacular y disfrutes al máximo una noche inolvidable.
+      </p>
+    </div>
+
+    <!-- Tarjetas de Guía para Ellas y Ellos con Marcos Dorados -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+      <!-- Tarjeta Mujeres -->
+      <div class="p-8 rounded-3xl bg-white invitation-frame shadow-xs text-center flex flex-col items-center">
+        <div class="w-14 h-14 rounded-full bg-white border-2 border-[#D4AF37] flex items-center justify-center text-2xl mb-4 shadow-xs ring-4 ring-[#D4AF37]/15">
+          👗
+        </div>
+        <h3 class="font-editorial text-2xl text-[#132446] font-medium mb-3">
+          Mujeres
+        </h3>
+        <p class="text-xs uppercase tracking-widest text-[#132446] font-semibold mb-4 bg-white border border-[#D4AF37]/50 px-4 py-1 rounded-full">
+          Vestido Largo de Noche
+        </p>
+        <p class="text-sm text-[#64748B] leading-relaxed font-light">
+          Telas fluidas, satín, terciopelo o pedrería elegante. Recomendamos calzado cómodo o tacón ancho para disfrutar los jardines empedrados y la pista de baile.
+        </p>
+      </div>
+
+      <!-- Tarjeta Hombres -->
+      <div class="p-8 rounded-3xl bg-white invitation-frame shadow-xs text-center flex flex-col items-center">
+        <div class="w-14 h-14 rounded-full bg-white border-2 border-[#D4AF37] flex items-center justify-center text-2xl mb-4 shadow-xs ring-4 ring-[#D4AF37]/15">
+          🤵
+        </div>
+        <h3 class="font-editorial text-2xl text-[#132446] font-medium mb-3">
+          Hombres
+        </h3>
+        <p class="text-xs uppercase tracking-widest text-[#132446] font-semibold mb-4 bg-white border border-[#D4AF37]/50 px-4 py-1 rounded-full">
+          Esmoquin o Traje Formal Oscuro
+        </p>
+        <p class="text-sm text-[#64748B] leading-relaxed font-light">
+          Traje formal negro, azul medianoche o esmoquin con corbata o moño formal. Camisa de vestir blanca y zapatos de piel pulidos.
+        </p>
+      </div>
+    </div>
+
+    <!-- Paleta de Color Sugerida con Borde Dorado -->
+    <div class="p-8 sm:p-10 rounded-3xl bg-white border border-[#D4AF37]/50 ring-1 ring-[#D4AF37]/20 shadow-xs text-center max-w-3xl mx-auto">
+      <h3 class="text-xs uppercase tracking-[0.2em] font-semibold text-[#132446] mb-2">
+        Inspiración de Colores Sugeridos
+      </h3>
+      <p class="text-xs text-[#64748B] mb-8 font-light">
+        (Opcional: tonalidades de noche y naturaleza que armonizan con la atmósfera de la boda)
+      </p>
+
+      <!-- Muestrario de Colores -->
+      <div class="flex flex-wrap items-center justify-center gap-4 sm:gap-6 mb-8">
+        {suggestedColors.map((color) => (
+          <div class="flex flex-col items-center group">
+            <div
+              class="w-12 h-12 rounded-full shadow-inner border-2 border-white ring-1 ring-black/10 group-hover:scale-110 transition-transform duration-300"
+              style={`background-color: ${color.hex};`}
+            ></div>
+            <span class="text-[11px] font-medium text-[#132446]/80 mt-2">
+              {color.name}
+            </span>
+          </div>
+        ))}
+      </div>
+
+      <!-- Nota de Cariño sobre el Blanco -->
+      <div class="p-4 rounded-2xl bg-[#132446]/5 border border-[#132446]/10 text-xs text-[#64748B] leading-relaxed max-w-xl mx-auto">
+        <span class="text-[#132446] font-semibold block mb-1">✦ Nota de Cariño ✦</span>
+        Agradecemos reservar los tonos <span class="font-semibold text-[#132446]">blanco, marfil y perla</span> exclusivamente para la novia.
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,221 @@
+---
+// Reproductor de Música Ambiental Flotante con /videoplayback.weba
+---
+
+<div id="ambient-audio-widget" class="fixed bottom-6 left-6 z-50">
+  <!-- Elemento de Audio HTML5 con fuentes comprimidas (Opus WebM 1.46 MB y MP3 1.76 MB) -->
+  <audio
+    id="wedding-audio"
+    loop
+    preload="auto"
+    autoplay
+  >
+    <source src="/music.webm" type="audio/webm" />
+    <source src="/music.mp3" type="audio/mpeg" />
+  </audio>
+
+  <button
+    id="audio-toggle-btn"
+    type="button"
+    aria-label="Reproducir o pausar música ambiental"
+    class="group flex items-center gap-3 px-4 py-2.5 rounded-full bg-white/95 hover:bg-white text-[#132446] border-2 border-[#D4AF37] shadow-lg hover:shadow-2xl backdrop-blur-md transition-all duration-300 transform hover:-translate-y-0.5 cursor-pointer ring-2 ring-[#D4AF37]/25"
+  >
+    <!-- Icono de Vinilo Giratorio / Disco en azul noche #132446 -->
+    <div
+      class="relative w-8 h-8 rounded-full bg-[#132446] border border-[#D4AF37]/70 flex items-center justify-center overflow-hidden shrink-0 shadow-inner"
+      id="vinyl-icon"
+    >
+      <!-- Centro del vinilo con oro -->
+      <div class="w-2.5 h-2.5 rounded-full bg-[#D4AF37] border border-[#132446]"></div>
+      <!-- Surcos decorativos -->
+      <div class="absolute inset-0 rounded-full border border-white/20 pointer-events-none scale-75"></div>
+    </div>
+
+    <!-- Etiqueta y Estado -->
+    <div class="flex flex-col text-left">
+      <span
+        class="text-[10px] uppercase tracking-wider font-semibold text-[#132446]"
+        id="audio-status-label"
+      >
+        Nuestra Música
+      </span>
+      <span
+        class="text-[11px] font-medium text-[#64748B] flex items-center gap-1.5"
+        id="audio-action-label"
+      >
+        <span
+          class="w-1.5 h-1.5 rounded-full bg-[#D4AF37] opacity-80"
+          id="audio-dot"
+        ></span>
+        <span id="audio-state-text">Reproduciendo</span>
+      </span>
+    </div>
+
+    <!-- Ecualizador Visual Mini con barras doradas / navy -->
+    <div class="flex items-end gap-0.5 h-3.5 pl-1" id="equalizer-bars">
+      <span class="w-0.5 h-1.5 bg-[#D4AF37] rounded-full transition-all"></span>
+      <span class="w-0.5 h-3 bg-[#132446] rounded-full transition-all"></span>
+      <span class="w-0.5 h-2 bg-[#D4AF37] rounded-full transition-all"></span>
+    </div>
+  </button>
+</div>
+
+<style>
+  @keyframes spin-slow {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .spinning {
+    animation: spin-slow 4s linear infinite;
+  }
+
+  @keyframes bar-pulse-1 {
+    0%, 100% { height: 4px; }
+    50% { height: 14px; }
+  }
+  @keyframes bar-pulse-2 {
+    0%, 100% { height: 14px; }
+    50% { height: 6px; }
+  }
+  @keyframes bar-pulse-3 {
+    0%, 100% { height: 8px; }
+    50% { height: 16px; }
+  }
+
+  .playing span:nth-child(1) { animation: bar-pulse-1 0.8s ease-in-out infinite; }
+  .playing span:nth-child(2) { animation: bar-pulse-2 0.7s ease-in-out infinite; }
+  .playing span:nth-child(3) { animation: bar-pulse-3 0.9s ease-in-out infinite; }
+
+  @keyframes subtle-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.04); }
+  }
+
+  .pulse-attention {
+    animation: subtle-pulse 2s ease-in-out infinite;
+  }
+</style>
+
+<script>
+  function setupAmbientAudio() {
+    const audio = document.getElementById('wedding-audio') as HTMLAudioElement;
+    const btn = document.getElementById('audio-toggle-btn');
+    const vinyl = document.getElementById('vinyl-icon');
+    const stateText = document.getElementById('audio-state-text');
+    const dot = document.getElementById('audio-dot');
+    const eq = document.getElementById('equalizer-bars');
+
+    if (!audio || !btn) return;
+
+    let userPaused = false;
+
+    function updateUI(isPlaying: boolean) {
+      if (isPlaying) {
+        btn?.classList.remove('pulse-attention');
+        vinyl?.classList.add('spinning');
+        eq?.classList.add('playing');
+        if (stateText) stateText.textContent = 'Reproduciendo';
+        if (dot) {
+          dot.classList.remove('bg-gray-400');
+          dot.classList.add('bg-[#D4AF37]');
+        }
+      } else {
+        vinyl?.classList.remove('spinning');
+        eq?.classList.remove('playing');
+        if (userPaused) {
+          if (stateText) stateText.textContent = 'Pausado';
+          btn?.classList.remove('pulse-attention');
+        } else {
+          // A la espera de la primera interacción
+          if (stateText) stateText.textContent = 'Toca para oír';
+          btn?.classList.add('pulse-attention');
+        }
+        if (dot) {
+          dot.classList.remove('bg-[#D4AF37]');
+          dot.classList.add('bg-gray-400');
+        }
+      }
+    }
+
+    function tryPlay() {
+      if (userPaused) return;
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            updateUI(true);
+            cleanupUnlockListeners();
+          })
+          .catch(() => {
+            // El navegador bloqueó el autoplay sin interacción
+            updateUI(false);
+          });
+      }
+    }
+
+    // 1. Intentar reproducir directamente al inicio
+    tryPlay();
+
+    // 2. Desbloquear con cualquier primer gesto del usuario en cualquier parte de la pantalla
+    const unlockAudio = () => {
+      if (!userPaused && audio.paused) {
+        const p = audio.play();
+        if (p !== undefined) {
+          p.then(() => {
+            updateUI(true);
+            cleanupUnlockListeners();
+          }).catch(() => {
+            // Sigue esperando un evento válido
+          });
+        }
+      }
+    };
+
+    const unlockEvents = ['pointerdown', 'touchstart', 'mousedown', 'click', 'keydown'];
+
+    function cleanupUnlockListeners() {
+      unlockEvents.forEach((evt) => {
+        document.removeEventListener(evt, unlockAudio, true);
+        window.removeEventListener(evt, unlockAudio, true);
+      });
+    }
+
+    unlockEvents.forEach((evt) => {
+      document.addEventListener(evt, unlockAudio, { capture: true, passive: true });
+      window.addEventListener(evt, unlockAudio, { capture: true, passive: true });
+    });
+
+    // 3. Botón flotante para pausar o reanudar
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+
+      if (audio.paused) {
+        userPaused = false;
+        audio.play().then(() => {
+          updateUI(true);
+          cleanupUnlockListeners();
+        }).catch((err) => {
+          console.error('Error al reproducir audio:', err);
+        });
+      } else {
+        userPaused = true;
+        audio.pause();
+        updateUI(false);
+      }
+    });
+
+    audio.addEventListener('play', () => updateUI(true));
+    audio.addEventListener('pause', () => updateUI(false));
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupAmbientAudio);
+  } else {
+    setupAmbientAudio();
+  }
+</script>

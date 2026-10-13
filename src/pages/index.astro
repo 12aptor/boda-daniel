@@ -1,11 +1,59 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/Navbar.astro";
+import HeroSection from "../components/HeroSection.astro";
+import Countdown from "../components/Countdown.astro";
+import StoryTimeline from "../components/StoryTimeline.astro";
+import PhotoGallery from "../components/PhotoGallery.astro";
+import Itinerary from "../components/Itinerary.astro";
+import DressCode from "../components/DressCode.astro";
+import GiftRegistry from "../components/GiftRegistry.astro";
+import RSVPForm from "../components/RSVPForm.astro";
+import MusicPlayer from "../components/MusicPlayer.astro";
+import Footer from "../components/Footer.astro";
+import FloralDecorations from "../components/FloralDecorations.astro";
 ---
 
-<Layout>
-	<Welcome />
+<Layout
+  title="Daniel & Esther — Nuestra Boda | Save the Date & RSVP"
+  description="Celebra con nosotros nuestro matrimonio. Conoce los detalles de la ceremonia, el itinerario, la galería de fotos, el código de vestimenta y confirma tu asistencia."
+>
+  <!-- Decoraciones botánicas con rosas azules y hojas doradas animadas suavemente -->
+  <FloralDecorations />
+
+  <!-- Barra de navegación fija / flotante -->
+  <Navbar />
+
+  <!-- Main Content -->
+  <main class="relative">
+    <!-- 1. Hero con Canvas 3D de alianzas de oro, pétalos y polvo de estrellas -->
+    <HeroSection />
+
+    <!-- 2. Contador en tiempo real -->
+    <Countdown />
+
+    <!-- 3. Nuestra Historia (Timeline Editorial) -->
+    <StoryTimeline />
+
+    <!-- 4. Galería de Fotos Interactiva con Filtros y Lightbox -->
+    <!-- <PhotoGallery /> -->
+
+    <!-- 5. Itinerario del Evento y Navegación GPS -->
+    <Itinerary />
+
+    <!-- 6. Código de Vestimenta & Muestrario de Color -->
+    <DressCode />
+
+    <!-- 7. Mesa de Regalos & Datos Bancarios con Copia de CLABE -->
+    <GiftRegistry />
+
+    <!-- 8. Formulario RSVP Interactivo con Confeti y WhatsApp -->
+    <RSVPForm />
+  </main>
+
+  <!-- 9. Reproductor de Música Ambiental Flotante -->
+  <MusicPlayer />
+
+  <!-- 10. Footer de Cierre -->
+  <Footer />
 </Layout>

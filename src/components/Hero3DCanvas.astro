@@ -1,0 +1,322 @@
+---
+// Hero 3D Canvas con Three.js
+// Enfocado exclusivamente en una caída orgánica y etérea de pétalos botánicos en 3D
+// Responde con suavidad al movimiento del mouse (viento e inercia) y al scroll del usuario.
+---
+
+<div id="hero-canvas-container" class="absolute inset-0 pointer-events-none z-0 overflow-hidden bg-white">
+  <canvas id="three-hero-canvas" class="w-full h-full block opacity-0 transition-opacity duration-1000"></canvas>
+  <div class="absolute inset-0 bg-gradient-to-b from-white/20 via-transparent to-white pointer-events-none"></div>
+</div>
+
+<script>
+  import * as THREE from 'three';
+
+  function initHeroCanvas() {
+    const container = document.getElementById('hero-canvas-container');
+    const canvas = document.getElementById('three-hero-canvas') as HTMLCanvasElement;
+
+    if (!container || !canvas) return;
+
+    const width = container.clientWidth || window.innerWidth;
+    const height = container.clientHeight || window.innerHeight;
+
+    try {
+      initThreeJs(container, canvas, width, height);
+    } catch (err) {
+      console.warn('Fallback a modo Canvas 2D:', err);
+      init2DFallback(container, canvas);
+    }
+  }
+
+  function initThreeJs(container: HTMLElement, canvas: HTMLCanvasElement, width: number, height: number) {
+    // Escena principal
+    const scene = new THREE.Scene();
+    scene.fog = new THREE.FogExp2(0xFFFFFF, 0.002);
+
+    // Cámara de perspectiva
+    const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+    camera.position.set(0, 0, 80);
+
+    // Renderizador WebGL
+    const renderer = new THREE.WebGLRenderer({
+      canvas,
+      alpha: true,
+      antialias: true,
+      powerPreference: 'high-performance'
+    });
+    renderer.setSize(width, height);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.1;
+
+    // Iluminación suave y natural
+    const ambientLight = new THREE.AmbientLight(0xfff7ee, 1.6);
+    scene.add(ambientLight);
+
+    const sunLight = new THREE.DirectionalLight(0xfff0db, 1.8);
+    sunLight.position.set(25, 45, 40);
+    scene.add(sunLight);
+
+    const rimLight = new THREE.DirectionalLight(0xd9e3f0, 0.8);
+    rimLight.position.set(-25, -20, 30);
+    scene.add(rimLight);
+
+    // --- PÉTALOS BOTÁNICOS 3D VOLUMÉTRICOS ---
+    const isMobile = window.innerWidth < 768;
+    // Cantidad equilibrada: suficiente para verse continuo y vivo, sin sobrecargar la pantalla móvil
+    const petalCount = isMobile ? 68 : 85;
+    const petalsGroup = new THREE.Group();
+    scene.add(petalsGroup);
+
+    // Curva orgánica de pétalo de rosa / flor blanca
+    const petalShape = new THREE.Shape();
+    petalShape.moveTo(0, 0);
+    petalShape.bezierCurveTo(2.2, 3.2, 2.8, 6.5, 0, 9.5);
+    petalShape.bezierCurveTo(-2.8, 6.5, -2.2, 3.2, 0, 0);
+
+    const petalGeom = new THREE.ShapeGeometry(petalShape, 14);
+    const pPos = petalGeom.attributes.position;
+    for (let i = 0; i < pPos.count; i++) {
+      const y = pPos.getY(i);
+      const x = pPos.getX(i);
+      // Curvatura cóncava natural en Z y sutil ondulación en los bordes
+      const curve = Math.sin((y / 9.5) * Math.PI) * 1.4 - Math.abs(x) * 0.25;
+      pPos.setZ(i, curve);
+    }
+    petalGeom.computeVertexNormals();
+
+    // Paleta delicada de pétalos nupciales inspirada en la invitación (rosas azules, hojas de oro, marfil)
+    const petalPalette = [
+      0x5F86A6, // Rosa azul empolvado (dusty blue)
+      0x8AA8C4, // Celeste periwinkle sutil
+      0x1E3A66, // Azul marino profundo (navy rose)
+      0xD4AF37, // Oro metálico (hoja dorada)
+      0xFAF7F2, // Marfil floral puro
+      0xEADBC5  // Champagne cálido
+    ];
+
+    interface PetalData {
+      mesh: THREE.Mesh;
+      rx: number;
+      ry: number;
+      rz: number;
+      swaySpeed: number;
+      swayOffset: number;
+      fallSpeed: number;
+      initialScale: number;
+    }
+
+    const petals: PetalData[] = [];
+
+    for (let i = 0; i < petalCount; i++) {
+      const color = petalPalette[Math.floor(Math.random() * petalPalette.length)];
+      const isGold = color === 0xD4AF37;
+      const mat = new THREE.MeshStandardMaterial({
+        color,
+        roughness: isGold ? 0.3 : 0.65,
+        metalness: isGold ? 0.8 : 0.05,
+        side: THREE.DoubleSide,
+        transparent: true,
+        opacity: isMobile ? 0.82 : 0.88
+      });
+
+      const mesh = new THREE.Mesh(petalGeom, mat);
+
+      // En móvil: tamaño mucho más uniforme, fino y delicado (evita que se vean gigantes)
+      const s = isMobile
+        ? (Math.random() * 0.10 + 0.36) // Escala uniforme entre 0.36 y 0.46
+        : (Math.random() * 0.35 + 0.60); // En desktop mantiene escala editorial
+
+      mesh.scale.set(s, s, s);
+
+      // En móvil: limitar el ancho en X a la columna visible y alejar del lente (Z) para evitar pétalos gigantes en primer plano
+      const posX = isMobile ? (Math.random() - 0.5) * 65 : (Math.random() - 0.5) * 150;
+      const posY = (Math.random() - 0.5) * 130;
+      const posZ = isMobile ? ((Math.random() - 0.5) * 30 - 15) : ((Math.random() - 0.5) * 70);
+
+      mesh.position.set(posX, posY, posZ);
+
+      mesh.rotation.set(
+        Math.random() * Math.PI * 2,
+        Math.random() * Math.PI * 2,
+        Math.random() * Math.PI * 2
+      );
+
+      petalsGroup.add(mesh);
+      petals.push({
+        mesh,
+        rx: (Math.random() - 0.5) * (isMobile ? 0.012 : 0.016),
+        ry: (Math.random() - 0.5) * (isMobile ? 0.014 : 0.018),
+        rz: (Math.random() - 0.5) * 0.010,
+        swaySpeed: Math.random() * 0.02 + 0.008,
+        swayOffset: Math.random() * Math.PI * 2,
+        fallSpeed: isMobile ? (Math.random() * 0.06 + 0.035) : (Math.random() * 0.09 + 0.04),
+        initialScale: s
+      });
+    }
+
+    // --- INTERACTIVIDAD CON MOUSE Y SCROLL ---
+    let mouseX = 0, mouseY = 0;
+    let targetMouseX = 0, targetMouseY = 0;
+    let scrollY = 0, targetScrollY = 0;
+
+    const onPointerMove = (e: MouseEvent | TouchEvent) => {
+      let cx = 0, cy = 0;
+      if ('touches' in e && e.touches.length > 0) {
+        cx = e.touches[0].clientX;
+        cy = e.touches[0].clientY;
+      } else if ('clientX' in e) {
+        cx = e.clientX;
+        cy = e.clientY;
+      }
+      targetMouseX = (cx / window.innerWidth) * 2 - 1;
+      targetMouseY = -(cy / window.innerHeight) * 2 + 1;
+    };
+
+    const onScroll = () => {
+      targetScrollY = window.scrollY;
+    };
+
+    window.addEventListener('pointermove', onPointerMove, { passive: true });
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    let isVisible = true;
+    const observer = new IntersectionObserver(([entry]) => {
+      isVisible = entry.isIntersecting;
+    }, { threshold: 0.05 });
+    observer.observe(container);
+
+    const onResize = () => {
+      const w = container.clientWidth || window.innerWidth;
+      const h = container.clientHeight || window.innerHeight;
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      renderer.setSize(w, h);
+    };
+    window.addEventListener('resize', onResize);
+
+    setTimeout(() => {
+      canvas.classList.remove('opacity-0');
+      canvas.classList.add('opacity-100');
+    }, 150);
+
+    const startTime = performance.now();
+    let animId: number;
+
+    const render = () => {
+      animId = requestAnimationFrame(render);
+      if (!isVisible) return;
+
+      const elapsed = (performance.now() - startTime) * 0.001;
+
+      // Inercia suave del cursor y scroll
+      mouseX += (targetMouseX - mouseX) * 0.04;
+      mouseY += (targetMouseY - mouseY) * 0.04;
+      scrollY += (targetScrollY - scrollY) * 0.06;
+
+      // Movimiento de cámara con sutil parallax
+      camera.position.x = mouseX * 10;
+      camera.position.y = mouseY * 8 - (scrollY * 0.025);
+      camera.lookAt(0, -(scrollY * 0.01), 0);
+
+      // ANIMACIÓN ORGÁNICA DE LOS PÉTALOS
+      petals.forEach(p => {
+        // Giro tridimensional continuo
+        p.mesh.rotation.x += p.rx;
+        p.mesh.rotation.y += p.ry;
+        p.mesh.rotation.z += p.rz;
+
+        // Descenso y oscilación de viento lateral influenciada por el cursor
+        p.mesh.position.y -= p.fallSpeed + (scrollY * 0.0006);
+        p.mesh.position.x += Math.sin(elapsed * p.swaySpeed + p.swayOffset) * 0.1 + (mouseX * 0.05);
+
+        // Reposicionar al llegar al límite inferior para un flujo infinito y continuo
+        if (p.mesh.position.y < -70) {
+          p.mesh.position.y = 70;
+          p.mesh.position.x = isMobile ? (Math.random() - 0.5) * 65 : (Math.random() - 0.5) * 150;
+          p.mesh.position.z = isMobile ? ((Math.random() - 0.5) * 30 - 15) : (Math.random() - 0.5) * 70;
+        }
+      });
+
+      renderer.render(scene, camera);
+    };
+
+    render();
+  }
+
+  // Fallback 2D de pétalos en caso de que WebGL esté restringido
+  function init2DFallback(container: HTMLElement, canvas: HTMLCanvasElement) {
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let width = (canvas.width = container.clientWidth || window.innerWidth);
+    let height = (canvas.height = container.clientHeight || window.innerHeight);
+    const isMobile2D = window.innerWidth < 768;
+
+    window.addEventListener('resize', () => {
+      width = canvas.width = container.clientWidth || window.innerWidth;
+      height = canvas.height = container.clientHeight || window.innerHeight;
+    });
+
+    const petals2D: { x: number; y: number; size: number; speedY: number; speedX: number; rot: number; rotSpeed: number; color: string }[] = [];
+    const colors = ['#FDFBF7', '#F7EFE5', '#EFE5D8', '#E2D7C5'];
+    const count2D = isMobile2D ? 55 : 40;
+
+    for (let i = 0; i < count2D; i++) {
+      petals2D.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        // Tamaño uniforme y fino en móvil
+        size: isMobile2D ? (Math.random() * 2 + 3.5) : (Math.random() * 5 + 6),
+        speedY: Math.random() * 0.6 + 0.3,
+        speedX: (Math.random() - 0.5) * 0.35,
+        rot: Math.random() * Math.PI * 2,
+        rotSpeed: (Math.random() - 0.5) * 0.02,
+        color: colors[Math.floor(Math.random() * colors.length)]
+      });
+    }
+
+    setTimeout(() => {
+      canvas.classList.remove('opacity-0');
+      canvas.classList.add('opacity-100');
+    }, 150);
+
+    const animate2D = () => {
+      ctx.clearRect(0, 0, width, height);
+
+      petals2D.forEach(p => {
+        p.y += p.speedY;
+        p.x += p.speedX;
+        p.rot += p.rotSpeed;
+
+        if (p.y > height + 20) {
+          p.y = -20;
+          p.x = Math.random() * width;
+        }
+
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rot);
+        ctx.fillStyle = p.color;
+        ctx.globalAlpha = 0.85;
+
+        // Dibujo de forma de pétalo orgánico ovalado en 2D
+        ctx.beginPath();
+        ctx.ellipse(0, 0, p.size * 0.6, p.size, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      });
+
+      requestAnimationFrame(animate2D);
+    };
+
+    animate2D();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initHeroCanvas);
+  } else {
+    initHeroCanvas();
+  }
+</script>

@@ -1,0 +1,83 @@
+---
+// Confirmación de Asistencia (RSVP) con enlace a Google Forms
+const googleFormsUrl =
+  "https://docs.google.com/forms/d/e/1FAIpQLSf4E5G9zIXGfAiKBmKHe-CULmgifgGsYfUqnz9-XmcbCTW42Q/viewform?usp=publish-editor";
+---
+
+<section id="rsvp" class="py-24 px-4 sm:px-6 relative z-10 bg-white">
+  <div class="max-w-3xl mx-auto">
+    <!-- Encabezado con Caligrafía Dorada -->
+    <div class="text-center mb-10">
+      <div
+        class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#132446]/5 border border-[#D4AF37]/40 mb-2"
+      >
+        <span
+          class="text-[10px] uppercase tracking-[0.25em] text-[#132446] font-semibold"
+          >Responde Por Favor</span
+        >
+      </div>
+      <h2
+        class="font-calligraphy text-4xl sm:text-6xl md:text-7xl text-[#D4AF37] font-normal mb-1"
+      >
+        Confirmación de Asistencia
+      </h2>
+      <div class="text-[#D4AF37] text-xs mb-3">💛</div>
+      <p class="text-sm text-[#64748B] max-w-md mx-auto font-light">
+        Agradecemos confirmar tu asistencia antes del <strong
+          class="text-[#132446]">19 de Diciembre de 2026</strong
+        > para coordinar cada detalle de la recepción.
+      </p>
+    </div>
+
+    <!-- Tarjeta Elegante con Marco Doble Dorado de Invitación -->
+    <div
+      class="p-8 sm:p-12 rounded-3xl bg-white invitation-frame shadow-lg text-center max-w-xl mx-auto relative overflow-hidden"
+    >
+      <div
+        class="w-16 h-16 rounded-full bg-white border-2 border-[#D4AF37] text-[#132446] flex items-center justify-center mx-auto mb-6 text-2xl shadow-xs ring-4 ring-[#D4AF37]/15"
+      >
+        💌
+      </div>
+
+      <h3
+        class="font-editorial text-2xl sm:text-3xl text-[#132446] font-medium mb-3"
+      >
+        Completa tu Confirmación
+      </h3>
+      <p class="text-sm text-[#64748B] leading-relaxed mb-8 font-light">
+        Por favor haz clic en el siguiente enlace para completar el formulario
+        oficial con tus datos y pases de asistencia.
+      </p>
+
+      <!-- Botón con Borde Dorado de Lujo -->
+      <a
+        href={googleFormsUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn-gold w-full sm:w-auto inline-flex items-center justify-center gap-3 py-4 px-8 rounded-full text-xs uppercase tracking-[0.2em] font-semibold group"
+      >
+        <span>Llenar Formulario de Asistencia</span>
+        <svg
+          class="w-4 h-4 transform group-hover:translate-x-1 transition-transform text-[#D4AF37]"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+        </svg>
+      </a>
+
+      <div
+        class="mt-8 pt-6 border-t border-[#D4AF37]/30 flex items-center justify-center gap-2 text-xs text-[#64748B]"
+      >
+        <span class="text-[#D4AF37]">✦</span>
+        <span>Formulario oficial en Google Forms</span>
+        <span class="text-[#D4AF37]">✦</span>
+      </div>
+    </div>
+  </div>
+</section>

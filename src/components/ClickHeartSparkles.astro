@@ -1,0 +1,279 @@
+---
+// Efecto interactivo al hacer click/tap: Corazón creciente formado exclusivamente por un borde grueso de puntos y destellos brillantes
+---
+
+<canvas
+  id="click-heart-sparkles-canvas"
+  class="fixed inset-0 pointer-events-none z-[99999] w-full h-full block"
+  aria-hidden="true"
+></canvas>
+
+<script>
+  interface SparkleParticle {
+    t: number;             // Parámetro angular sobre la curva del corazón (0 a 2PI)
+    thicknessOffset: number; // Variación radial para crear el borde grueso
+    size: number;          // Tamaño base del punto brillante
+    color: string;         // Tono de oro/diamante
+    twinkleSpeed: number;  // Velocidad de parpadeo
+    twinkleOffset: number; // Fase del destello
+    isStar: boolean;       // Si se dibuja como destello en cruz/estrella o punto circular
+    driftX: number;        // Dispersión sutil al disiparse
+    driftY: number;
+  }
+
+  interface GrowingHeart {
+    x: number;
+    y: number;
+    startTime: number;
+    duration: number;
+    maxScale: number;
+    particles: SparkleParticle[];
+  }
+
+  function initClickHeartSparkles() {
+    const canvas = document.getElementById('click-heart-sparkles-canvas') as HTMLCanvasElement;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    let width = (canvas.width = window.innerWidth);
+    let height = (canvas.height = window.innerHeight);
+    let dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+    function resizeCanvas() {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      canvas.style.width = width + 'px';
+      canvas.style.height = height + 'px';
+      ctx?.scale(dpr, dpr);
+    }
+
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas, { passive: true });
+
+    const activeHearts: GrowingHeart[] = [];
+    let isAnimating = false;
+
+    // Paleta de puntos brillantes en tonos dorados nupciales y destello diamante
+    const sparkleColors = [
+      '#FFFFFF', // Destello diamante puro
+      '#FFF8DC', // Champaña brillante
+      '#FCD34D', // Oro resplandeciente
+      '#D4AF37', // Oro clásico real
+      '#F59E0B', // Ámbar cálido
+      '#FDE68A'  // Oro suave etéreo
+    ];
+
+    // Función paramétrica normalizada del corazón
+    function getHeartPoint(t: number) {
+      // x = 16 * sin^3(t)
+      // y = -(13 * cos(t) - 5 * cos(2t) - 2 * cos(3t) - cos(4t))
+      const sinT = Math.sin(t);
+      const x = 16 * sinT * sinT * sinT;
+      const y = -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
+      // Normalizamos dividiendo entre 16 para que la escala unitaria sea ~1
+      return { x: x / 16, y: y / 16 };
+    }
+
+    // Crea un nuevo corazón compuesto por un borde grueso de puntos brillantes
+    function createHeartBurst(clientX: number, clientY: number) {
+      const particleCount = window.innerWidth < 640 ? 80 : 120; // Optimizado para móvil y desktop
+      const particles: SparkleParticle[] = [];
+
+      for (let i = 0; i < particleCount; i++) {
+        // Distribución angular a lo largo del perímetro del corazón
+        // Pequeño jitter para que no queden alineados artificialmente
+        const t = (i / particleCount) * Math.PI * 2 + (Math.random() - 0.5) * 0.08;
+        
+        // Borde grueso: espesor radial concéntrico variado
+        const thicknessOffset = (Math.random() - 0.5) * 0.28; // +/- 14% de espesor del radio
+        
+        // Tamaños variados: algunos puntos pequeños, otros medianos con halo
+        const size = Math.random() < 0.25 ? 3.6 + Math.random() * 2 : 1.8 + Math.random() * 2;
+        const isStar = Math.random() < 0.35; // 35% tienen forma de estrella brillante ✨
+
+        const color = sparkleColors[Math.floor(Math.random() * sparkleColors.length)];
+        const twinkleSpeed = 8 + Math.random() * 12;
+        const twinkleOffset = Math.random() * Math.PI * 2;
+
+        // Dispersión sutil hacia afuera en la fase final
+        const driftAngle = Math.random() * Math.PI * 2;
+        const driftSpeed = 8 + Math.random() * 18;
+
+        particles.push({
+          t,
+          thicknessOffset,
+          size,
+          color,
+          twinkleSpeed,
+          twinkleOffset,
+          isStar,
+          driftX: Math.cos(driftAngle) * driftSpeed,
+          driftY: Math.sin(driftAngle) * driftSpeed
+        });
+      }
+
+      const isMobile = window.innerWidth < 640;
+      activeHearts.push({
+        x: clientX,
+        y: clientY,
+        startTime: performance.now(),
+        duration: 1050, // 1.05s de animación suave y elegante
+        maxScale: isMobile ? 65 : 95, // Tamaño máximo del radio del corazón
+        particles
+      });
+
+      if (!isAnimating) {
+        isAnimating = true;
+        requestAnimationFrame(renderLoop);
+      }
+    }
+
+    // Dibujo de destello en estrella brillante (4 puntas tipo sparkle ✨)
+    function drawSparkleStar(
+      context: CanvasRenderingContext2D,
+      cx: number,
+      cy: number,
+      radius: number,
+      alpha: number,
+      color: string
+    ) {
+      context.save();
+      context.globalAlpha = alpha;
+      context.fillStyle = color;
+      context.shadowColor = '#D4AF37';
+      context.shadowBlur = radius * 3;
+
+      context.beginPath();
+      const arm = radius * 2.2;
+      const waist = radius * 0.35;
+
+      context.moveTo(cx, cy - arm);
+      context.quadraticCurveTo(cx, cy, cx + waist, cy);
+      context.quadraticCurveTo(cx, cy, cx + arm, cy);
+      context.quadraticCurveTo(cx, cy, cx, cy + waist);
+      context.quadraticCurveTo(cx, cy, cx, cy + arm);
+      context.quadraticCurveTo(cx, cy, cx - waist, cy);
+      context.quadraticCurveTo(cx, cy, cx - arm, cy);
+      context.quadraticCurveTo(cx, cy, cx, cy - waist);
+      context.closePath();
+      context.fill();
+
+      // Centro blanco de máxima intensidad
+      context.beginPath();
+      context.fillStyle = '#FFFFFF';
+      context.arc(cx, cy, radius * 0.45, 0, Math.PI * 2);
+      context.fill();
+
+      context.restore();
+    }
+
+    // Loop de renderizado
+    function renderLoop(currentTime: number) {
+      if (!ctx) return;
+      ctx.clearRect(0, 0, width, height);
+
+      for (let hIdx = activeHearts.length - 1; hIdx >= 0; hIdx--) {
+        const heart = activeHearts[hIdx];
+        const elapsed = currentTime - heart.startTime;
+        const progress = Math.min(elapsed / heart.duration, 1);
+
+        if (progress >= 1) {
+          activeHearts.splice(hIdx, 1);
+          continue;
+        }
+
+        // Curva de crecimiento: comienza compacto y se expande con inercia suave (ease-out cubic/quint)
+        // easeOutQuart: 1 - Math.pow(1 - progress, 4)
+        const scaleEase = 1 - Math.pow(1 - progress, 3.5);
+        const currentScale = 12 + heart.maxScale * scaleEase;
+
+        // Desvanecimiento suave en la segunda mitad
+        let overallAlpha = 1;
+        if (progress < 0.15) {
+          overallAlpha = progress / 0.15; // Fade-in rápido
+        } else if (progress > 0.55) {
+          overallAlpha = Math.max(0, 1 - (progress - 0.55) / 0.45); // Fade-out etéreo
+        }
+
+        // Dispersión sutil al final
+        const driftProgress = Math.max(0, (progress - 0.6) / 0.4);
+
+        for (let pIdx = 0; pIdx < heart.particles.length; pIdx++) {
+          const p = heart.particles[pIdx];
+          const pt = getHeartPoint(p.t);
+
+          // Escala del punto con el espesor del borde grueso
+          const effectiveScale = currentScale * (1 + p.thicknessOffset);
+          let px = heart.x + pt.x * effectiveScale;
+          let py = heart.y + pt.y * effectiveScale;
+
+          // Añadir dispersión estelar en la fase final
+          if (driftProgress > 0) {
+            px += p.driftX * driftProgress;
+            py += p.driftY * driftProgress;
+          }
+
+          // Parpadeo / twinkle
+          const twinkle = 0.6 + 0.4 * Math.sin(progress * p.twinkleSpeed + p.twinkleOffset);
+          const particleAlpha = overallAlpha * twinkle;
+
+          if (particleAlpha <= 0.01) continue;
+
+          if (p.isStar) {
+            drawSparkleStar(ctx, px, py, p.size * (1 - progress * 0.2), particleAlpha, p.color);
+          } else {
+            // Punto circular brillante con resplandor dorado
+            ctx.save();
+            ctx.globalAlpha = particleAlpha;
+            ctx.fillStyle = p.color;
+            ctx.shadowColor = '#D4AF37';
+            ctx.shadowBlur = p.size * 2.5;
+
+            ctx.beginPath();
+            ctx.arc(px, py, p.size * (1 - progress * 0.15), 0, Math.PI * 2);
+            ctx.fill();
+
+            // Núcleo blanco brillante
+            ctx.fillStyle = '#FFFFFF';
+            ctx.beginPath();
+            ctx.arc(px, py, p.size * 0.4, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.restore();
+          }
+        }
+      }
+
+      if (activeHearts.length > 0) {
+        requestAnimationFrame(renderLoop);
+      } else {
+        isAnimating = false;
+        ctx.clearRect(0, 0, width, height);
+      }
+    }
+
+    // Capturar clicks y taps en toda la pantalla
+    // Usamos pointerdown para respuesta instantánea sin delay en móviles
+    window.addEventListener(
+      'pointerdown',
+      (e: PointerEvent) => {
+        // Ignora eventos no principales si aplican
+        if (e.button !== undefined && e.button !== 0) return;
+        createHeartBurst(e.clientX, e.clientY);
+      },
+      { passive: true }
+    );
+  }
+
+  // Inicializar al cargar el DOM o cambio de vista
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initClickHeartSparkles);
+  } else {
+    initClickHeartSparkles();
+  }
+</script>

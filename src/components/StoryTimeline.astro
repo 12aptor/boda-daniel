@@ -1,0 +1,102 @@
+---
+// Nuestra Historia: Cronología editorial con estilo #132446 y toques de oro
+const milestones = [
+  {
+    year: "Noviembre 2020",
+    title: "El Primer Encuentro",
+    description: "Una tarde de café improvisada que prometía durar 30 minutos y se extendió durante cuatro horas de conversaciones, risas y la certeza silenciosa de haber encontrado a alguien único.",
+    icon: "☕"
+  },
+  {
+    year: "Verano 2022",
+    title: "El Gran Viaje",
+    description: "Nuestra primera aventura juntos recorriendo caminos desconocidos. Entre atardeceres dorados y mapas perdidos, comprendimos que el hogar no es un lugar, sino una persona.",
+    icon: "✈️"
+  },
+  {
+    year: "Diciembre 2024",
+    title: "La Propuesta",
+    description: "Frente al mar y bajo un cielo estrellado que parecía haber conspirado para nosotros. Una mirada, un temblor en las manos, una rodilla en la arena y la respuesta más hermosa: 'Sí, un millón de veces sí'.",
+    icon: "💍"
+  },
+  {
+    year: "19 de Diciembre de 2026",
+    title: "El Comienzo del Siempre",
+    description: "El día en que unimos nuestras vidas ante Dios, rodeados de nuestras familias y los amigos que han sido testigos de este amor. El inicio de nuestro viaje eterno.",
+    icon: "✨"
+  }
+];
+---
+
+<section id="historia" class="py-24 px-4 sm:px-6 relative z-10 bg-white">
+  <div class="max-w-4xl mx-auto">
+    <!-- Encabezado con Caligrafía Dorada -->
+    <div class="text-center mb-16">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#132446]/5 border border-[#D4AF37]/40 mb-2">
+        <span class="text-[10px] uppercase tracking-[0.25em] text-[#132446] font-semibold">Capítulos De Amor</span>
+      </div>
+      <h2 class="font-calligraphy text-4xl sm:text-6xl md:text-7xl text-[#D4AF37] font-normal mb-1">
+        Nuestra Historia
+      </h2>
+      <div class="text-[#D4AF37] text-xs mb-3">💛</div>
+      <p class="text-sm sm:text-base text-[#132446]/80 max-w-lg mx-auto italic font-light font-editorial">
+        "Cada historia de amor es hermosa, pero la nuestra es nuestra favorita."
+      </p>
+    </div>
+
+    <!-- Timeline Editorial Vertical -->
+    <div class="relative">
+      <!-- Línea central guía dorada -->
+      <div class="absolute left-4 sm:left-1/2 top-4 bottom-4 -translate-x-1/2 w-[1px] bg-gradient-to-b from-transparent via-[#D4AF37] to-transparent"></div>
+
+      <div class="space-y-12 sm:space-y-16">
+        {milestones.map((item, index) => {
+          const isEven = index % 2 === 0;
+          return (
+            <div class={`relative flex flex-col sm:flex-row items-start ${isEven ? 'sm:flex-row-reverse' : ''} gap-6 sm:gap-12 group`}>
+              <!-- Contenido de la tarjeta con Marco Dorado -->
+              <div class="w-full sm:w-1/2 pl-12 sm:pl-0">
+                <div class={`p-6 sm:p-8 rounded-2xl bg-white border border-[#D4AF37]/50 ring-1 ring-[#D4AF37]/20 shadow-xs hover:shadow-md hover:border-[#D4AF37] transition-all duration-300 transform group-hover:-translate-y-1 ${isEven ? 'sm:text-left' : 'sm:text-right'}`}>
+                  <!-- Año / Fecha -->
+                  <div class={`flex items-center gap-2 mb-2 ${isEven ? 'sm:justify-start' : 'sm:justify-end'}`}>
+                    <span class="text-xs uppercase tracking-[0.2em] font-semibold text-[#132446] bg-white border border-[#D4AF37]/60 px-3 py-0.5 rounded-full">
+                      {item.year}
+                    </span>
+                  </div>
+
+                  <!-- Título -->
+                  <h3 class="font-editorial text-2xl text-[#132446] font-medium mb-2">
+                    {item.title}
+                  </h3>
+
+                  <!-- Descripción -->
+                  <p class="text-xs sm:text-sm text-[#64748B] leading-relaxed">
+                    {item.description}
+                  </p>
+                </div>
+              </div>
+
+              <!-- Nodo Central / Marcador -->
+              <div class="absolute left-4 sm:left-1/2 -translate-x-1/2 top-6 w-10 h-10 rounded-full bg-white border-2 border-[#D4AF37] flex items-center justify-center shadow-xs z-10 group-hover:scale-110 transition-transform ring-4 ring-[#132446]/5">
+                <span class="text-xs">{item.icon}</span>
+              </div>
+
+              <!-- Espacio vacío en desktop para equilibrar -->
+              <div class="hidden sm:block sm:w-1/2"></div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+
+    <!-- Cita de Cierre -->
+    <div class="mt-20 p-8 rounded-2xl bg-white border border-[#D8CBB9]/70 text-center max-w-2xl mx-auto shadow-xs">
+      <p class="font-editorial text-xl sm:text-2xl text-[#132446] italic font-light mb-2">
+        "Y lo mejor de esta historia... es que aún estamos escribiendo las primeras páginas."
+      </p>
+      <div class="text-xs uppercase tracking-[0.25em] text-[#D4AF37] font-semibold">
+        Daniel &amp; Esther
+      </div>
+    </div>
+  </div>
+</section>

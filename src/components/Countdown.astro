@@ -1,0 +1,128 @@
+---
+// Contador en tiempo real hacia el gran día con el carrito de bodas GIF en fondo blanco puro
+---
+
+<section id="countdown" class="py-20 px-4 sm:px-6 relative z-10 bg-white">
+  <div class="max-w-4xl mx-auto text-center">
+    <!-- Encabezado de Sección con Caligrafía Dorada -->
+    <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#132446]/5 border border-[#D4AF37]/40 mb-2">
+      <span class="text-[10px] uppercase tracking-[0.25em] text-[#132446] font-semibold">Esperando el Momento</span>
+    </div>
+    
+    <h2 class="font-calligraphy text-4xl sm:text-5xl md:text-6xl text-[#D4AF37] font-normal mb-1">
+      Cuenta Regresiva
+    </h2>
+    <div class="text-[#D4AF37] text-xs mb-3">💛</div>
+
+    <p class="text-sm text-[#64748B] max-w-md mx-auto mb-6 font-light">
+      Cada segundo nos acerca al instante en que diremos: "Sí, para siempre".
+    </p>
+
+    <!-- EL CARRITO DE BODAS GIF SOLO Y CENTRADO EN FONDO BLANCO PURO -->
+    <div class="my-4 flex justify-center items-center">
+      <img
+        src="/carro-boda.gif"
+        alt="Novios en carro de bodas rumbo al altar"
+        class="w-64 sm:w-80 md:w-96 max-w-full h-auto object-contain select-none pointer-events-none mix-blend-multiply"
+        loading="eager"
+      />
+    </div>
+
+    <!-- Contenedor del Contador en Tiempo Real con Bordes Dorados -->
+    <div class="grid grid-cols-4 gap-2 sm:gap-4 md:gap-6 max-w-2xl mx-auto mt-6 sm:mt-8" id="countdown-timer">
+      <!-- Tarjeta Días -->
+      <div class="relative group p-3 py-4 sm:p-5 md:p-6 rounded-2xl bg-white border border-[#D4AF37]/60 ring-1 ring-[#D4AF37]/20 shadow-xs hover:shadow-md hover:border-[#D4AF37] transition-all duration-300 flex flex-col items-center justify-center">
+        <div class="text-2xl sm:text-4xl md:text-5xl font-editorial font-light text-[#132446] tabular-nums leading-none" id="cd-days">
+          --
+        </div>
+        <div class="text-[9px] sm:text-[11px] uppercase tracking-wider sm:tracking-[0.2em] text-[#64748B] mt-2 font-medium">
+          Días
+        </div>
+        <div class="w-4 sm:w-8 h-[2px] bg-[#D4AF37] rounded-full mt-2 opacity-60 group-hover:opacity-100 group-hover:w-10 transition-all"></div>
+      </div>
+
+      <!-- Tarjeta Horas -->
+      <div class="relative group p-3 py-4 sm:p-5 md:p-6 rounded-2xl bg-white border border-[#D4AF37]/60 ring-1 ring-[#D4AF37]/20 shadow-xs hover:shadow-md hover:border-[#D4AF37] transition-all duration-300 flex flex-col items-center justify-center">
+        <div class="text-2xl sm:text-4xl md:text-5xl font-editorial font-light text-[#132446] tabular-nums leading-none" id="cd-hours">
+          --
+        </div>
+        <div class="text-[9px] sm:text-[11px] uppercase tracking-wider sm:tracking-[0.2em] text-[#64748B] mt-2 font-medium">
+          Horas
+        </div>
+        <div class="w-4 sm:w-8 h-[2px] bg-[#D4AF37] rounded-full mt-2 opacity-60 group-hover:opacity-100 group-hover:w-10 transition-all"></div>
+      </div>
+
+      <!-- Tarjeta Minutos -->
+      <div class="relative group p-3 py-4 sm:p-5 md:p-6 rounded-2xl bg-white border border-[#D4AF37]/60 ring-1 ring-[#D4AF37]/20 shadow-xs hover:shadow-md hover:border-[#D4AF37] transition-all duration-300 flex flex-col items-center justify-center">
+        <div class="text-2xl sm:text-4xl md:text-5xl font-editorial font-light text-[#132446] tabular-nums leading-none" id="cd-minutes">
+          --
+        </div>
+        <div class="text-[9px] sm:text-[11px] uppercase tracking-wider sm:tracking-[0.2em] text-[#64748B] mt-2 font-medium">
+          Minutos
+        </div>
+        <div class="w-4 sm:w-8 h-[2px] bg-[#D4AF37] rounded-full mt-2 opacity-60 group-hover:opacity-100 group-hover:w-10 transition-all"></div>
+      </div>
+
+      <!-- Tarjeta Segundos -->
+      <div class="relative group p-3 py-4 sm:p-5 md:p-6 rounded-2xl bg-white border border-[#D4AF37]/60 ring-1 ring-[#D4AF37]/20 shadow-xs hover:shadow-md hover:border-[#D4AF37] transition-all duration-300 flex flex-col items-center justify-center">
+        <div class="text-2xl sm:text-4xl md:text-5xl font-editorial font-light text-[#D4AF37] tabular-nums leading-none" id="cd-seconds">
+          --
+        </div>
+        <div class="text-[9px] sm:text-[11px] uppercase tracking-wider sm:tracking-[0.2em] text-[#64748B] mt-2 font-medium">
+          Segundos
+        </div>
+        <div class="w-4 sm:w-8 h-[2px] bg-[#D4AF37] rounded-full mt-2 opacity-60 group-hover:opacity-100 group-hover:w-10 transition-all"></div>
+      </div>
+    </div>
+
+    <!-- Mensaje inferior decorativo -->
+    <div class="mt-8 text-xs tracking-widest uppercase text-[#132446]/80 font-medium">
+      ✦ Sábado · 19 de Diciembre de 2026 · 16:00 hrs ✦
+    </div>
+  </div>
+</section>
+
+<script>
+  function setupCountdown() {
+    const targetDate = new Date('2026-12-19T16:00:00').getTime();
+
+    const elDays = document.getElementById('cd-days');
+    const elHours = document.getElementById('cd-hours');
+    const elMinutes = document.getElementById('cd-minutes');
+    const elSeconds = document.getElementById('cd-seconds');
+
+    if (!elDays || !elHours || !elMinutes || !elSeconds) return;
+
+    function updateTimer() {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      if (distance < 0) {
+        elDays.textContent = '00';
+        elHours.textContent = '00';
+        elMinutes.textContent = '00';
+        elSeconds.textContent = '00';
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      elDays.textContent = String(days).padStart(2, '0');
+      elHours.textContent = String(hours).padStart(2, '0');
+      elMinutes.textContent = String(minutes).padStart(2, '0');
+      elSeconds.textContent = String(seconds).padStart(2, '0');
+    }
+
+    updateTimer();
+    setInterval(updateTimer, 1000);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupCountdown);
+  } else {
+    setupCountdown();
+  }
+</script>

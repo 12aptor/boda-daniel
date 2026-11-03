@@ -1,14 +1,5 @@
 ---
-// Código de Vestimenta con guía de etiqueta y colores reservados
-const allowedInspirations = [
-  { name: "Verde Esmeralda", tag: "Sofisticado", hex: "#1B4D3E" },
-  { name: "Rosa Palo", tag: "Romántico", hex: "#DDA7A5" },
-  { name: "Vino / Borgoña", tag: "Distinguido", hex: "#6E2639" },
-  { name: "Terracota", tag: "Cálido", hex: "#BF6650" },
-  { name: "Champagne", tag: "Luminoso", hex: "#D4AF37" },
-  { name: "Lavanda / Lila", tag: "Etéreo", hex: "#9E8EB8" },
-  { name: "Verde Salvia", tag: "Botánico", hex: "#7A8B6E" }
-];
+// Código de Vestimenta
 ---
 
 <section id="dresscode" class="py-24 px-4 sm:px-6 relative z-10 bg-transparent">
@@ -43,10 +34,7 @@ const allowedInspirations = [
           Damas
         </h3>
         <p class="text-xs sm:text-sm uppercase tracking-[0.2em] text-[#0E1B33] font-semibold mb-4 bg-[#0E1B33]/5 border border-[#D4AF37]/45 px-5 py-2 rounded-full">
-          Vestidos Largos de Preferencia
-        </p>
-        <p class="font-editorial italic text-base sm:text-lg text-[#5A6A85] leading-relaxed font-light">
-          De preferencia vestidos largos en tejidos elegantes. Cualquier color de tu preferencia es bienvenido, a excepción de los colores reservados para los novios.
+          Vestido Formal
         </p>
       </div>
 
@@ -64,9 +52,6 @@ const allowedInspirations = [
         <p class="text-xs sm:text-sm uppercase tracking-[0.2em] text-[#0E1B33] font-semibold mb-4 bg-[#0E1B33]/5 border border-[#D4AF37]/45 px-5 py-2 rounded-full">
           Traje Formal
         </p>
-        <p class="font-editorial italic text-base sm:text-lg text-[#5A6A85] leading-relaxed font-light">
-          Traje formal con camisa de vestir y corbata, o esmoquin. Agradecemos tener en cuenta la reserva del color azul noche.
-        </p>
       </div>
     </div>
 
@@ -79,11 +64,8 @@ const allowedInspirations = [
       <h3 class="font-editorial text-2xl sm:text-3xl text-[#0E1B33] font-normal mb-2">
         Cualquier color es bienvenido, excepto:
       </h3>
-      <p class="font-editorial italic text-base sm:text-lg text-[#5A6A85] max-w-lg mx-auto mb-8 font-light">
-        Agradecemos con mucho cariño abstenerse de usar los siguientes dos colores, reservados exclusivamente para los novios:
-      </p>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 max-w-lg mx-auto">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 max-w-lg mx-auto mb-6">
         <!-- Color Reservado 1: Perla / Blanco -->
         <div class="p-4 rounded-2xl bg-[#FCFBF7] border border-[#D4AF37]/35 flex items-center gap-4">
           <div class="w-12 h-12 rounded-full bg-[#FAF8F5] border-2 border-[#D4AF37] shadow-inner flex items-center justify-center shrink-0">
@@ -118,53 +100,11 @@ const allowedInspirations = [
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- Muestrario de Inspiración de Colores Permitidos (Diseño Atelier Nupcial de Lujo) -->
-    <div class="p-8 sm:p-10 rounded-3xl bg-white invitation-frame shadow-sm text-center max-w-4xl mx-auto">
-      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#132446]/5 border border-[#D4AF37]/40 text-[#132446] text-xs sm:text-sm font-semibold tracking-[0.2em] uppercase mb-2">
-        <span>✦ Inspiración Cromática ✦</span>
-      </div>
-
-      <h3 class="font-editorial text-2xl sm:text-3xl text-[#132446] font-medium mb-1 tracking-wide">
-        Paleta de Sugerencias Permitidas
-      </h3>
-
-      <div class="h-[1px] w-12 bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent mx-auto mb-3"></div>
-
-      <p class="text-sm sm:text-base text-[#64748B] max-w-lg mx-auto mb-8 font-light">
-        (Hermosas tonalidades que armonizan con la celebración y que puedes vestir con total libertad)
+      <p class="font-editorial italic text-base sm:text-lg text-[#5A6A85] max-w-lg mx-auto mb-2 font-light">
+        Agradecemos con mucho cariño abstenerse de usar los siguientes dos colores, reservados exclusivamente para los novios:
       </p>
-
-      <!-- Grid de Muestras de Tela Atelier -->
-      <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3 sm:gap-4">
-        {allowedInspirations.map((color) => (
-          <div class="p-3.5 sm:p-4 rounded-2xl bg-white border border-[#D4AF37]/30 hover:border-[#D4AF37] hover:shadow-md transition-all duration-300 flex flex-col items-center group cursor-default">
-            <div
-              class="w-14 h-14 sm:w-16 sm:h-16 rounded-full ring-2 ring-[#D4AF37]/40 ring-offset-2 ring-offset-white shadow-md group-hover:scale-105 group-hover:ring-[#D4AF37] transition-all duration-300 relative overflow-hidden"
-              style={`background-color: ${color.hex}; background-image: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.38) 0%, rgba(0,0,0,0.18) 100%);`}
-            >
-              <!-- Reflejo satinado sutil -->
-              <div class="absolute inset-0 rounded-full bg-gradient-to-tr from-transparent via-white/10 to-white/30 pointer-events-none"></div>
-            </div>
-
-            <span class="font-editorial text-xs sm:text-sm font-semibold text-[#132446] mt-3 tracking-wide text-center leading-tight">
-              {color.name}
-            </span>
-
-            <span class="text-xs uppercase tracking-wider text-[#D4AF37] font-semibold mt-1">
-              {color.tag}
-            </span>
-          </div>
-        ))}
-      </div>
-
-      <!-- Cierre sutil y cordial -->
-      <div class="mt-8 pt-5 border-t border-[#D4AF37]/30 text-xs sm:text-sm text-[#64748B] flex items-center justify-center gap-2">
-        <span class="text-[#D4AF37]">✦</span>
-        <span>Siéntete libre de elegir el color que te haga sentir más cómodo/a y radiante</span>
-        <span class="text-[#D4AF37]">✦</span>
-      </div>
     </div>
+
   </div>
 </section>

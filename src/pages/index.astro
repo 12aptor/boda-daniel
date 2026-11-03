@@ -1,39 +1,42 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import InvitationLoader from "../components/InvitationLoader.astro";
 import Navbar from "../components/Navbar.astro";
+import Hero3DCanvas from "../components/Hero3DCanvas.astro";
 import HeroSection from "../components/HeroSection.astro";
 import Countdown from "../components/Countdown.astro";
-import StoryTimeline from "../components/StoryTimeline.astro";
+import ParentsAndGodparents from "../components/ParentsAndGodparents.astro";
 import PhotoGallery from "../components/PhotoGallery.astro";
 import Itinerary from "../components/Itinerary.astro";
 import DressCode from "../components/DressCode.astro";
-import GiftRegistry from "../components/GiftRegistry.astro";
 import RSVPForm from "../components/RSVPForm.astro";
 import MusicPlayer from "../components/MusicPlayer.astro";
 import Footer from "../components/Footer.astro";
-import FloralDecorations from "../components/FloralDecorations.astro";
 ---
 
 <Layout
   title="Daniel & Esther — Nuestra Boda | Save the Date & RSVP"
   description="Celebra con nosotros nuestro matrimonio. Conoce los detalles de la ceremonia, el itinerario, la galería de fotos, el código de vestimenta y confirma tu asistencia."
 >
-  <!-- Decoraciones botánicas con rosas azules y hojas doradas animadas suavemente -->
-  <FloralDecorations />
+  <!-- Loader interactivo: Sobre de invitación con sello de lacre de oro y fuegos artificiales de corazón -->
+  <InvitationLoader />
+
+  <!-- Único grupo de hojas y pétalos 3D botánicos para toda la plataforma, visible en todo momento -->
+  <Hero3DCanvas />
 
   <!-- Barra de navegación fija / flotante -->
   <Navbar />
 
   <!-- Main Content -->
-  <main class="relative">
-    <!-- 1. Hero con Canvas 3D de alianzas de oro, pétalos y polvo de estrellas -->
+  <main class="relative bg-transparent">
+    <!-- 1. Hero con invitación nupcial -->
     <HeroSection />
 
     <!-- 2. Contador en tiempo real -->
     <Countdown />
 
-    <!-- 3. Nuestra Historia (Timeline Editorial) -->
-    <StoryTimeline />
+    <!-- 3. Nuestros Padres y Padrinos -->
+    <ParentsAndGodparents />
 
     <!-- 4. Galería de Fotos Interactiva con Filtros y Lightbox -->
     <!-- <PhotoGallery /> -->
@@ -44,10 +47,7 @@ import FloralDecorations from "../components/FloralDecorations.astro";
     <!-- 6. Código de Vestimenta & Muestrario de Color -->
     <DressCode />
 
-    <!-- 7. Mesa de Regalos & Datos Bancarios con Copia de CLABE -->
-    <GiftRegistry />
-
-    <!-- 8. Formulario RSVP Interactivo con Confeti y WhatsApp -->
+    <!-- 7. Formulario RSVP Interactivo con Confeti y WhatsApp -->
     <RSVPForm />
   </main>
 

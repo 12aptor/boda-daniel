@@ -1,0 +1,525 @@
+---
+// Loader de Bienvenida de Alta Costura Nupcial
+// Inspirado en ByResala: Sobre vertical completo en pantalla, estrella fugaz volando hacia el sello,
+// y al tocar el sello de lacre 'D & E': espectáculo pirotécnico en corazón dorado y apertura del sobre.
+---
+
+<div
+  id="invitation-loader"
+  class="fixed inset-0 z-[9999] flex items-center justify-center bg-[#F4F1EA] select-none overflow-hidden transition-all duration-1000"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Apertura de la Invitación de Boda"
+>
+  <!-- Canvas de Efectos: Estrella Fugaz y Fuegos Artificiales en Corazón -->
+  <canvas
+    id="loader-canvas"
+    class="absolute inset-0 pointer-events-none z-40 w-full h-full block"
+  ></canvas>
+
+  <!-- Atmósfera sutil de iluminación de fondo -->
+  <div class="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,_rgba(212,175,55,0.12)_0%,_transparent_75%)]"></div>
+
+  <!-- EL SOBRE VERTICAL DE LUJO (Formato Realista tipo ByResala) -->
+  <div
+    id="envelope-wrapper"
+    class="relative w-full h-full max-w-[430px] max-h-[820px] sm:h-[90vh] sm:rounded-3xl shadow-[0_25px_60px_-15px_rgba(0,0,0,0.25)] overflow-hidden bg-[#FAF7F2] border border-[#D4AF37]/30 flex flex-col justify-between transition-all duration-700"
+    style="perspective: 1400px;"
+  >
+    <!-- Textura sutil de papel artesanal de algodón -->
+    <div class="absolute inset-0 pointer-events-none opacity-40 bg-[radial-gradient(#d4af37_0.75px,transparent_0.75px)] [background-size:16px_16px]"></div>
+
+    <!-- Filete perimetral interior en oro fino -->
+    <div class="absolute inset-4 sm:inset-5 border border-[#D4AF37]/35 rounded-2xl pointer-events-none z-10"></div>
+    <div class="absolute inset-5 sm:inset-6 border border-[#D4AF37]/15 rounded-xl pointer-events-none z-10"></div>
+
+    <!-- CUERPO SUPERIOR Y SOLAPA DIAGONAL DEL SOBRE (Con animación 3D de apertura) -->
+    <div
+      id="envelope-flap"
+      class="absolute inset-x-0 top-0 h-[52%] z-25 origin-top transition-transform duration-1000 ease-in-out"
+      style="transform-style: preserve-3d;"
+    >
+      <!-- Cara exterior de la solapa con corte diagonal realista de sobre de gala -->
+      <div
+        class="w-full h-full bg-gradient-to-b from-[#F5EFE6] via-[#EFE7D8] to-[#E5DAC6] shadow-[0_12px_24px_rgba(0,0,0,0.08)] relative"
+        style="clip-path: polygon(0 0, 100% 0, 50% 100%);"
+      >
+        <!-- Filo dorado en el borde de la solapa triangular -->
+        <div
+          class="absolute inset-0 pointer-events-none border-b-2 border-[#D4AF37]/60"
+          style="clip-path: polygon(0 0, 100% 0, 50% 100%);"
+        ></div>
+        <!-- Forro interior sedoso suave -->
+        <div class="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent"></div>
+      </div>
+    </div>
+
+    <!-- CUERPO INFERIOR DEL SOBRE CON CORTE DIAGONAL DE BOLSILLO -->
+    <div
+      class="absolute inset-0 z-20 pointer-events-none overflow-hidden"
+    >
+      <!-- Solapa inferior envolvente -->
+      <div
+        class="absolute inset-x-0 bottom-0 h-[62%] bg-gradient-to-t from-[#F8F5EE] via-[#FBF9F4] to-[#F1E9DB] shadow-inner"
+        style="clip-path: polygon(0 100%, 100% 100%, 100% 32%, 50% 64%, 0 32%);"
+      >
+        <div class="absolute inset-0 border-t border-[#D4AF37]/40"></div>
+      </div>
+    </div>
+
+    <!-- SELLO DE LACRE CENTRAL 'D & E' -->
+    <div
+      id="seal-container"
+      class="absolute left-1/2 top-[52%] -translate-x-1/2 -translate-y-1/2 z-35 flex flex-col items-center cursor-pointer group"
+    >
+      <!-- Aura de luz dorada pulsante -->
+      <div
+        id="seal-aura"
+        class="absolute -inset-4 rounded-full bg-[#D4AF37]/25 blur-md animate-pulse pointer-events-none"
+      ></div>
+
+      <!-- Medallón de Lacre Dorado con Relieve 3D Realista -->
+      <div
+        id="wax-seal"
+        class="relative w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-gradient-to-br from-[#EAC765] via-[#D4AF37] to-[#8C6D1F] p-1.5 shadow-[0_14px_28px_rgba(0,0,0,0.22),_inset_0_2px_4px_rgba(255,255,255,0.7)] border-2 border-[#FFF0BA] transition-all duration-500 group-hover:scale-105 active:scale-95"
+      >
+        <!-- Borde irregular fundido tipo cera caliente artesanal -->
+        <div class="w-full h-full rounded-full border border-[#FFE78A]/80 flex flex-col items-center justify-center bg-gradient-to-tr from-[#A68022] via-[#C9A237] to-[#EAC765] shadow-[inset_0_4px_10px_rgba(0,0,0,0.3)]">
+          <!-- Monograma de los Novios 'D & E' en Relieve Fino -->
+          <div class="flex items-center justify-center tracking-tight">
+            <span class="font-editorial italic font-medium text-3xl sm:text-4xl text-[#3D2C04] drop-shadow-[0_1.5px_1px_rgba(255,255,255,0.65)]">
+              D
+            </span>
+            <span class="font-ampersand italic text-lg sm:text-xl text-[#3D2C04]/90 mx-0.5 mt-1 drop-shadow-[0_1px_1px_rgba(255,255,255,0.6)]">
+              &amp;
+            </span>
+            <span class="font-editorial italic font-medium text-3xl sm:text-4xl text-[#3D2C04] drop-shadow-[0_1.5px_1px_rgba(255,255,255,0.65)]">
+              E
+            </span>
+          </div>
+          <!-- Corona de laurel miniatura grabada en la base del sello -->
+          <div class="flex items-center gap-1 opacity-70 mt-0.5">
+            <span class="w-1 h-1 rounded-full bg-[#3D2C04]"></span>
+            <span class="w-1.5 h-1.5 rounded-full bg-[#3D2C04]"></span>
+            <span class="w-1 h-1 rounded-full bg-[#3D2C04]"></span>
+          </div>
+        </div>
+
+        <!-- Destello brillante especular superior -->
+        <div class="absolute top-2 left-4 w-7 h-3 rounded-full bg-white/40 blur-[1px] -rotate-45 pointer-events-none"></div>
+      </div>
+    </div>
+
+    <!-- TEXTO IMPRESO DIRECTAMENTE EN EL SOBRE (Idéntico a la referencia ByResala) -->
+    <div
+      id="envelope-caption"
+      class="relative z-30 mt-auto mb-12 sm:mb-16 px-6 text-center pointer-events-none transition-opacity duration-500"
+    >
+      <span class="text-xs sm:text-sm uppercase tracking-[0.3em] text-[#917238] font-bold block mb-2">
+        Nuestra Boda
+      </span>
+      <h2 class="font-script text-4xl sm:text-5xl text-[#0E1B33] leading-none mb-2 drop-shadow-xs">
+        Daniel &amp; Esther
+      </h2>
+      <div class="h-[1px] w-14 bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent mx-auto mb-3"></div>
+      <p class="font-editorial italic text-base sm:text-lg text-[#0E1B33]/80 font-light">
+        19 de Diciembre de 2026 · 10:00 AM
+      </p>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  function initInvitationLoader() {
+    const loader = document.getElementById('invitation-loader');
+    if (!loader) return;
+
+    // Bloquear scroll de la página mientras el sobre está visible
+    document.body.style.overflow = 'hidden';
+
+    const canvas = document.getElementById('loader-canvas') as HTMLCanvasElement;
+    const ctx = canvas?.getContext('2d');
+    const sealContainer = document.getElementById('seal-container');
+    const waxSeal = document.getElementById('wax-seal');
+    const sealAura = document.getElementById('seal-aura');
+    const envelopeFlap = document.getElementById('envelope-flap');
+    const envelopeWrapper = document.getElementById('envelope-wrapper');
+    const envelopeCaption = document.getElementById('envelope-caption');
+
+    let width = (canvas.width = window.innerWidth);
+    let height = (canvas.height = window.innerHeight);
+
+    function resizeCanvas() {
+      if (!canvas) return;
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+
+    let hasOpened = false;
+
+    // Obtener coordenadas exactas del centro del sello de lacre
+    function getSealCenter() {
+      if (!waxSeal) return { x: width / 2, y: height / 2 };
+      const rect = waxSeal.getBoundingClientRect();
+      return {
+        x: rect.left + rect.width / 2,
+        y: rect.top + rect.height / 2
+      };
+    }
+
+    // -------------------------------------------------------------------------
+    // 1. ANIMACIÓN DE LA ESTRELLA FUGAZ BRILLANTE VOLANDO HACIA EL SELLO
+    // -------------------------------------------------------------------------
+    interface StarTrailParticle {
+      x: number;
+      y: number;
+      vx: number;
+      vy: number;
+      size: number;
+      color: string;
+      alpha: number;
+      decay: number;
+    }
+
+    const starTrailParticles: StarTrailParticle[] = [];
+    let shootingStarActive = true;
+    let starProgress = 0; // 0 to 1
+    let starDuration = 2200; // 2.2 segundos de vuelo elegante
+    let starStartTime = performance.now() + 400; // inicia suavemente
+
+    // Punto de origen de la estrella (esquina superior derecha con curva natural)
+    const starStart = {
+      x: width > 768 ? width * 0.78 : width * 0.90,
+      y: height * 0.08
+    };
+
+    // Control point para curva Bézier cuadrática hacia el sello
+    function getStarBezierPoint(p: number, p0: {x:number; y:number}, p1: {x:number; y:number}, p2: {x:number; y:number}) {
+      const inv = 1 - p;
+      return {
+        x: inv * inv * p0.x + 2 * inv * p * p1.x + p * p * p2.x,
+        y: inv * inv * p0.y + 2 * inv * p * p1.y + p * p * p2.y
+      };
+    }
+
+    // Dibujar estrella brillante con destellos de 4 puntas
+    function drawRadiantStar(c: CanvasRenderingContext2D, x: number, y: number, radius: number, alpha: number) {
+      c.save();
+      c.globalAlpha = Math.max(0, Math.min(1, alpha));
+      c.fillStyle = '#FFFFFF';
+      c.shadowColor = '#FFE885';
+      c.shadowBlur = radius * 4;
+
+      // Núcleo resplandeciente
+      c.beginPath();
+      c.arc(x, y, radius * 0.6, 0, Math.PI * 2);
+      c.fill();
+
+      // Brazos de estrella de 4 puntas
+      const longArm = radius * 3.8;
+      const waist = radius * 0.35;
+      c.fillStyle = '#FFF8E1';
+      c.beginPath();
+      c.moveTo(x, y - longArm);
+      c.quadraticCurveTo(x, y, x + waist, y);
+      c.quadraticCurveTo(x, y, x + longArm, y);
+      c.quadraticCurveTo(x, y, x, y + waist);
+      c.quadraticCurveTo(x, y, x, y + longArm);
+      c.quadraticCurveTo(x, y, x - waist, y);
+      c.quadraticCurveTo(x, y, x - longArm, y);
+      c.quadraticCurveTo(x, y, x, y - waist);
+      c.closePath();
+      c.fill();
+      c.restore();
+    }
+
+    // Impacto de la estrella en el sello: explosión de destellos en círculo
+    function triggerStarImpact(targetX: number, targetY: number) {
+      for (let i = 0; i < 45; i++) {
+        const angle = (i / 45) * Math.PI * 2 + (Math.random() - 0.5) * 0.3;
+        const speed = Math.random() * 4.5 + 1.5;
+        starTrailParticles.push({
+          x: targetX,
+          y: targetY,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          size: Math.random() * 2.8 + 1.2,
+          color: Math.random() < 0.6 ? '#FFFFFF' : '#FFDF79',
+          alpha: 1,
+          decay: Math.random() * 0.02 + 0.015
+        });
+      }
+
+      // Sacudida o brillo en el sello
+      if (sealAura) {
+        sealAura.style.transform = 'scale(1.4)';
+        sealAura.style.opacity = '1';
+        setTimeout(() => {
+          if (sealAura) {
+            sealAura.style.transform = '';
+            sealAura.style.opacity = '';
+          }
+        }, 500);
+      }
+    }
+
+    // -------------------------------------------------------------------------
+    // 2. FUEGOS ARTIFICIALES EN FORMA DE CORAZÓN DORADO (Al hacer clic en el sello)
+    // -------------------------------------------------------------------------
+    interface FireworkParticle {
+      x: number;
+      y: number;
+      targetX: number;
+      targetY: number;
+      vx: number;
+      vy: number;
+      size: number;
+      color: string;
+      alpha: number;
+      decay: number;
+      isStar: boolean;
+      sparkleSpeed: number;
+      sparklePhase: number;
+    }
+
+    const fireworkParticles: FireworkParticle[] = [];
+    const goldPalette = ['#FFFFFF', '#FFF9E6', '#FFEA85', '#F5CD47', '#D4AF37', '#FFBF00', '#FDE68A'];
+
+    function getHeartPoint(t: number) {
+      const sinT = Math.sin(t);
+      const x = 16 * sinT * sinT * sinT;
+      const y = -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
+      return { x: x / 16, y: y / 16 };
+    }
+
+    function triggerHeartFireworks(originX: number, originY: number) {
+      const particleCount = window.innerWidth < 640 ? 160 : 230;
+      const heartRadius = window.innerWidth < 640 ? 120 : 175;
+
+      for (let i = 0; i < particleCount; i++) {
+        const t = (i / particleCount) * Math.PI * 2 + (Math.random() - 0.5) * 0.08;
+        const pt = getHeartPoint(t);
+
+        const thickness = 1 + (Math.random() - 0.5) * 0.25;
+        const targetX = originX + pt.x * heartRadius * thickness;
+        const targetY = originY + pt.y * heartRadius * thickness;
+
+        const angle = Math.atan2(targetY - originY, targetX - originX);
+        const speed = Math.random() * 5 + 4;
+
+        fireworkParticles.push({
+          x: originX,
+          y: originY,
+          targetX,
+          targetY,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed,
+          size: Math.random() < 0.4 ? 3.5 + Math.random() * 2 : 1.8 + Math.random() * 2,
+          color: goldPalette[Math.floor(Math.random() * goldPalette.length)],
+          alpha: 1,
+          decay: Math.random() * 0.007 + 0.0055,
+          isStar: Math.random() < 0.45,
+          sparkleSpeed: Math.random() * 8 + 6,
+          sparklePhase: Math.random() * Math.PI * 2
+        });
+      }
+
+      // Chispas adicionales hacia arriba estilo fuegos artificiales
+      for (let j = 0; j < 50; j++) {
+        const angle = Math.random() * Math.PI * 2;
+        const speed = Math.random() * 6 + 2;
+        fireworkParticles.push({
+          x: originX,
+          y: originY,
+          targetX: originX + Math.cos(angle) * 90,
+          targetY: originY + Math.sin(angle) * 90,
+          vx: Math.cos(angle) * speed,
+          vy: Math.sin(angle) * speed - 1.5,
+          size: Math.random() * 2.5 + 1.2,
+          color: '#FFF2B2',
+          alpha: 1,
+          decay: Math.random() * 0.012 + 0.008,
+          isStar: true,
+          sparkleSpeed: 10,
+          sparklePhase: Math.random() * Math.PI * 2
+        });
+      }
+    }
+
+    // -------------------------------------------------------------------------
+    // BUCLE PRINCIPAL DE ANIMACIÓN EN CANVAS
+    // -------------------------------------------------------------------------
+    function animate(time: number) {
+      if (!ctx) return;
+      ctx.clearRect(0, 0, width, height);
+
+      const sealPos = getSealCenter();
+
+      // 1. ANIMACIÓN DE LA ESTRELLA FUGAZ
+      if (shootingStarActive && time >= starStartTime) {
+        starProgress = (time - starStartTime) / starDuration;
+
+        if (starProgress <= 1) {
+          // Curva Bézier que vuela directamente hacia el centro del sello
+          const ctrl = {
+            x: (starStart.x + sealPos.x) / 2 + (width > 768 ? 100 : 50),
+            y: Math.min(starStart.y, sealPos.y) - 60
+          };
+          const currentPos = getStarBezierPoint(starProgress, starStart, ctrl, sealPos);
+
+          // Generar partículas en la estela de la estrella
+          for (let k = 0; k < 4; k++) {
+            starTrailParticles.push({
+              x: currentPos.x + (Math.random() - 0.5) * 4,
+              y: currentPos.y + (Math.random() - 0.5) * 4,
+              vx: (Math.random() - 0.5) * 0.8,
+              vy: (Math.random() - 0.5) * 0.8,
+              size: Math.random() * 2.4 + 1.2,
+              color: Math.random() < 0.5 ? '#FFFFFF' : '#FFD966',
+              alpha: 0.9,
+              decay: 0.025
+            });
+          }
+
+          // Dibujar la estrella principal
+          drawRadiantStar(ctx, currentPos.x, currentPos.y, 6.5, 1);
+        } else {
+          // La estrella impactó contra el sello de lacre
+          shootingStarActive = false;
+          triggerStarImpact(sealPos.x, sealPos.y);
+
+          // Si el usuario no ha abierto el sobre después de 5 segundos, repetir la estrella suavemente
+          setTimeout(() => {
+            if (!hasOpened) {
+              starStartTime = performance.now();
+              shootingStarActive = true;
+            }
+          }, 4500);
+        }
+      }
+
+      // Dibujar partículas de la estela de la estrella
+      for (let i = starTrailParticles.length - 1; i >= 0; i--) {
+        const p = starTrailParticles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.alpha -= p.decay;
+
+        if (p.alpha <= 0) {
+          starTrailParticles.splice(i, 1);
+          continue;
+        }
+
+        ctx.save();
+        ctx.globalAlpha = p.alpha;
+        ctx.fillStyle = p.color;
+        ctx.shadowColor = '#D4AF37';
+        ctx.shadowBlur = p.size * 2;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+
+      // 2. DIBUJAR FUEGOS ARTIFICIALES DEL CORAZÓN (Si están activos)
+      for (let i = fireworkParticles.length - 1; i >= 0; i--) {
+        const p = fireworkParticles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vx *= 0.96;
+        p.vy *= 0.96;
+        p.vy += 0.035; // gravedad delicada
+        p.alpha -= p.decay;
+
+        if (p.alpha <= 0) {
+          fireworkParticles.splice(i, 1);
+          continue;
+        }
+
+        const twinkle = Math.sin(Date.now() * 0.01 * p.sparkleSpeed + p.sparklePhase) * 0.35 + 0.65;
+        const currentAlpha = Math.max(0, p.alpha * twinkle);
+
+        if (p.isStar) {
+          drawRadiantStar(ctx, p.x, p.y, p.size, currentAlpha);
+        } else {
+          ctx.save();
+          ctx.globalAlpha = currentAlpha;
+          ctx.fillStyle = p.color;
+          ctx.shadowColor = '#D4AF37';
+          ctx.shadowBlur = p.size * 3;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.restore();
+        }
+      }
+
+      if (!hasOpened || fireworkParticles.length > 0 || starTrailParticles.length > 0) {
+        requestAnimationFrame(animate);
+      }
+    }
+
+    requestAnimationFrame(animate);
+
+    // -------------------------------------------------------------------------
+    // 3. APERTURA ORQUESTADA AL TOCAR EL SELLO DE LACRE
+    // -------------------------------------------------------------------------
+    function openEnvelope() {
+      if (hasOpened) return;
+      hasOpened = true;
+      shootingStarActive = false;
+
+      const sealPos = getSealCenter();
+
+      // 1. Detonar fuegos artificiales en forma de corazón dorado
+      triggerHeartFireworks(sealPos.x, sealPos.y);
+
+      // 2. Desvanecer textos y aura
+      if (envelopeCaption) envelopeCaption.style.opacity = '0';
+      if (sealAura) sealAura.style.opacity = '0';
+
+      // 3. Efecto de rompimiento y disolución del sello de lacre
+      if (waxSeal) {
+        waxSeal.style.transform = 'scale(1.25)';
+        waxSeal.style.opacity = '0';
+        waxSeal.style.filter = 'blur(4px)';
+      }
+
+      // 4. Desplegar la solapa del sobre en 3D
+      setTimeout(() => {
+        if (envelopeFlap) {
+          envelopeFlap.style.transform = 'rotateX(-180deg)';
+        }
+      }, 200);
+
+      // 5. Expandir y desvanecer el sobre para revelar la página web completa
+      setTimeout(() => {
+        if (envelopeWrapper) {
+          envelopeWrapper.style.transform = 'scale(1.08)';
+          envelopeWrapper.style.opacity = '0';
+        }
+        loader.style.opacity = '0';
+        loader.style.pointerEvents = 'none';
+
+        // Restaurar scroll de la página web
+        document.body.style.overflow = '';
+
+        setTimeout(() => {
+          loader.remove();
+        }, 1100);
+      }, 1500);
+    }
+
+    // Permitir clic sobre el sello, el contenedor del sello o el sobre entero
+    sealContainer?.addEventListener('click', openEnvelope);
+    envelopeWrapper?.addEventListener('click', openEnvelope);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initInvitationLoader);
+  } else {
+    initInvitationLoader();
+  }
+</script>

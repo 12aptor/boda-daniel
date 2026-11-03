@@ -1,163 +1,83 @@
 ---
-// Itinerario del Evento con ubicaciones y accesos directos
-const events = [
-  {
-    time: "16:00 HRS",
-    title: "Ceremonia Religiosa",
-    location: "Capilla de la Hacienda San José",
-    description:
-      "Pedimos amablemente llegar 15 minutos antes para ubicarse cómodamente en la capilla antes de la entrada nupcial.",
-    tag: "Puntualidad",
-  },
-  {
-    time: "17:30 HRS",
-    title: "Cóctel de Bienvenida",
-    location: "Jardín de los Olivos",
-    description:
-      "Bebidas de autor, canapés gourmet y ensamble de cuerdas en vivo mientras cae la tarde en el valle.",
-    tag: "Música en Vivo",
-  },
-  {
-    time: "19:30 HRS",
-    title: "Banquete & Brindis",
-    location: "Gran Salón de Cristal",
-    description:
-      "Cena de 4 tiempos cuidadosamente seleccionada, primer baile de los recién casados y brindis con nuestros invitados.",
-    tag: "Cena Nupcial",
-  },
-  {
-    time: "21:30 HRS",
-    title: "Fiesta & Celebración",
-    location: "Pista Central & Terraza",
-    description:
-      "DJ en vivo, barra libre prémium, sorpresas de medianoche y baile hasta las 03:00 hrs.",
-    tag: "Hasta el Amanecer",
-  },
-];
-
-const googleMapsUrl = "https://maps.app.goo.gl/cef3mvEspsHtygHf7";
+// Itinerario y Ubicación de Alta Costura: diseño Concierge VIP
+const googleMapsUrl = "https://maps.app.goo.gl/Nm4PhKWFq28UvGo16";
 ---
 
-<section id="itinerario" class="py-24 px-4 sm:px-6 relative z-10 bg-white">
-  <div class="max-w-5xl mx-auto">
-    <!-- Encabezado con Caligrafía Dorada -->
+<section id="itinerario" class="py-24 px-4 sm:px-6 relative z-10 bg-transparent">
+  <div class="max-w-4xl mx-auto">
+    <!-- Encabezado Editorial -->
     <div class="text-center mb-16">
       <div
-        class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#132446]/5 border border-[#D4AF37]/40 mb-2"
+        class="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-[#0E1B33]/5 border border-[#D4AF37]/35 mb-4"
       >
         <span
-          class="text-[10px] uppercase tracking-[0.25em] text-[#132446] font-semibold"
-          >Minuto a Minuto</span
+          class="text-xs sm:text-sm uppercase tracking-[0.25em] text-[#0E1B33] font-semibold"
+          >Horario &amp; Locación Exclusiva</span
         >
       </div>
+
       <h2
-        class="font-calligraphy text-4xl sm:text-6xl md:text-7xl text-[#D4AF37] font-normal mb-1"
+        class="font-editorial text-4xl sm:text-6xl md:text-7xl font-light text-[#0E1B33] tracking-wide mb-2"
       >
         Itinerario del Evento
       </h2>
-      <div class="text-[#D4AF37] text-xs mb-3">💛</div>
-      <p class="text-sm text-[#64748B] max-w-md mx-auto">
-        Todo el enlace se llevará a cabo en una sola locación para tu mayor
-        comodidad y disfrute.
+
+      <div class="h-[1px] w-16 bg-gradient-to-r from-transparent via-[#D4AF37] to-transparent mx-auto mb-4"></div>
+
+      <p class="font-editorial italic text-lg sm:text-xl text-[#5A6A85] max-w-xl mx-auto font-light leading-relaxed">
+        Todo el enlace se llevará a cabo en una sola locación para tu mayor comodidad y disfrute.
       </p>
     </div>
 
-    <!-- Grid de Horarios con Bordes Dorados -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-14">
-      {
-        events.map((evt) => (
-          <div class="relative p-6 sm:p-8 rounded-2xl bg-white/95 border border-[#D4AF37]/50 ring-1 ring-[#D4AF37]/20 shadow-xs hover:shadow-md hover:border-[#D4AF37] transition-all duration-300 flex flex-col justify-between group">
-            <div>
-              <div class="flex items-center justify-between mb-4">
-                <span class="font-editorial text-2xl sm:text-3xl font-light text-[#132446] tracking-wide">
-                  {evt.time}
-                </span>
-                <span class="text-[10px] uppercase tracking-[0.2em] font-semibold text-[#132446] bg-white border border-[#D4AF37]/50 px-2.5 py-1 rounded-full">
-                  {evt.tag}
-                </span>
-              </div>
-              <h3 class="font-editorial text-2xl text-[#132446] font-medium mb-1">
-                {evt.title}
-              </h3>
-              <p class="text-xs font-semibold uppercase tracking-wider text-[#D4AF37] mb-3 flex items-center gap-1.5">
-                <svg
-                  class="w-3.5 h-3.5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                  />
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                  />
-                </svg>
-                {evt.location}
-              </p>
-              <p class="text-xs sm:text-sm text-[#64748B] leading-relaxed font-light">
-                {evt.description}
-              </p>
-            </div>
-            <div class="mt-4 pt-4 border-t border-[#D4AF37]/30 flex items-center justify-between text-xs text-[#132446]">
-              <span class="font-medium">IEP Garcilaso</span>
-              <span class="text-[#D4AF37]">✦</span>
-            </div>
-          </div>
-        ))
-      }
-    </div>
-
-    <!-- Tarjeta de Ubicación con Marco Doble Dorado de Invitación -->
-    <div
-      class="p-8 sm:p-10 rounded-3xl bg-white invitation-frame shadow-md max-w-3xl mx-auto text-center"
-    >
+    <!-- Tarjeta Concierge de Ceremonia & Ubicación -->
+    <div class="max-w-2xl mx-auto">
       <div
-        class="w-12 h-12 rounded-full bg-[#132446]/10 border border-[#D4AF37]/50 text-[#132446] flex items-center justify-center mx-auto mb-4"
+        class="relative p-8 sm:p-12 rounded-3xl bg-white/95 invitation-frame shadow-xl flex flex-col items-center text-center group"
       >
-        <svg
-          class="w-6 h-6"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
+        <!-- Icono de Campanario / Ceremonia -->
+        <div
+          class="w-16 h-16 rounded-full bg-[#FCFBF7] border border-[#D4AF37]/50 text-[#D4AF37] flex items-center justify-center mb-6 shadow-xs ring-4 ring-[#D4AF37]/10"
         >
-          <path
+          <svg
+            class="w-7 h-7 text-[#D4AF37]"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.6"
             stroke-linecap="round"
             stroke-linejoin="round"
-            stroke-width="1.8"
-            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-          ></path>
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="1.8"
-            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-        </svg>
-      </div>
+          >
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+          </svg>
+        </div>
 
-      <h3
-        class="font-editorial text-2xl sm:text-3xl text-[#132446] font-medium mb-2"
-      >
-        IEP Garcilaso
-      </h3>
-      <p class="text-md text-[#64748B] max-w-md mx-auto mb-6 font-light">
-        Urbanización Inca Garcilaso E-6.<br />
-        Paradero final de E.T. Columbia
-      </p>
+        <!-- Hora Central -->
+        <span class="font-editorial text-5xl sm:text-7xl font-extralight text-[#0E1B33] tracking-wider mb-2">
+          10:00 AM
+        </span>
 
-      <!-- Botón Directo de Navegación con Borde Dorado -->
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <span class="text-xs sm:text-sm uppercase tracking-[0.2em] font-semibold text-[#0E1B33] bg-[#0E1B33]/5 border border-[#D4AF37]/45 px-5 py-2 rounded-full mb-6">
+          Ceremonia Civil &amp; Religiosa
+        </span>
+
+        <h3 class="font-editorial text-3xl sm:text-4xl text-[#0E1B33] font-normal mb-3">
+          IEP Cusco
+        </h3>
+
+        <p class="font-editorial italic text-lg sm:text-xl text-[#5A6A85] max-w-lg mx-auto mb-8 font-light leading-relaxed">
+          "Nuestra unión ante Dios y la ley, así como la celebración posterior, se llevarán a cabo en el mismo lugar. Agradecemos su puntual asistencia para dar inicio a este bendecido momento."
+        </p>
+
+        <!-- Divisor sutil -->
+        <div class="h-[1px] w-24 bg-gradient-to-r from-transparent via-[#D4AF37]/60 to-transparent mx-auto mb-8"></div>
+
+        <!-- Botón Directo a Google Maps -->
         <a
           href={googleMapsUrl}
           target="_blank"
           rel="noopener noreferrer"
-          class="btn-gold w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full text-xs uppercase tracking-[0.15em] font-semibold"
+          class="btn-gold w-full sm:w-auto inline-flex items-center justify-center gap-3 px-10 py-4 rounded-full text-xs sm:text-sm uppercase tracking-[0.2em] font-semibold"
         >
           <svg
             class="w-4 h-4 text-[#D4AF37]"
@@ -168,8 +88,14 @@ const googleMapsUrl = "https://maps.app.goo.gl/cef3mvEspsHtygHf7";
               d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
             ></path>
           </svg>
-          Abrir en Google Maps
+          <span>Abrir Ubicación en Google Maps</span>
         </a>
+
+        <div class="mt-8 pt-4 border-t border-[#D4AF37]/25 text-[11px] text-[#5A6A85] flex items-center justify-center gap-2">
+          <span class="text-[#D4AF37]">✦</span>
+          <span>Cusco, Perú · Estacionamiento y acceso disponible</span>
+          <span class="text-[#D4AF37]">✦</span>
+        </div>
       </div>
     </div>
   </div>

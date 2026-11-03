@@ -3,23 +3,24 @@
 @layer base {
   :root {
     color-scheme: light;
-    --color-primary: #132446;
-    --color-primary-light: #1E3566;
-    --color-primary-dark: #0A1325;
-    --color-primary-subtle: #EEF2F8;
+    --color-primary: #0E1B33;
+    --color-primary-light: #16284C;
+    --color-primary-dark: #070E1A;
+    --color-primary-subtle: #F3F6FA;
     
     --color-gold: #C5A880;
     --color-gold-bright: #D4AF37;
-    --color-gold-light: #EFE4D0;
-    --color-gold-dark: #9A7B54;
+    --color-gold-foil: #DFBA49;
+    --color-gold-light: #F4EAD4;
+    --color-gold-dark: #917238;
     
-    --color-ivory: #FFFFFF;
-    --color-ivory-warm: #FFFFFF;
+    --color-paper: #FAF8F5;
+    --color-paper-warm: #FDFCF9;
     --color-sand: #D8CBB9;
-    --color-sand-light: #F4EFE6;
+    --color-sand-light: #F6F2EA;
     
     --color-charcoal: #1E293B;
-    --color-charcoal-muted: #64748B;
+    --color-charcoal-muted: #5A6A85;
   }
 
   html {
@@ -36,107 +37,147 @@
   }
 
   ::selection {
-    background-color: #132446;
+    background-color: #0E1B33;
     color: #FFFFFF;
   }
 }
 
 .font-editorial {
-  font-family: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+  font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
 }
 
 .font-script {
-  font-family: 'Alex Brush', 'Great Vibes', cursive;
+  font-family: 'Great Vibes', 'Alex Brush', cursive;
 }
 
 .font-calligraphy {
   font-family: 'Great Vibes', 'Alex Brush', cursive;
 }
 
+.font-pinyon {
+  font-family: 'Pinyon Script', 'Great Vibes', cursive;
+}
+
+.font-ampersand {
+  font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+  font-style: italic;
+  font-weight: 300;
+  display: inline-block;
+  line-height: 0.85;
+  vertical-align: baseline;
+}
+
 .font-sans-clean {
   font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
 }
 
-/* Marco nupcial con doble línea dorada tipo tarjeta de invitación */
+/* Marco nupcial de alta costura: doble filete dorado con hendidura y relieve */
 .invitation-frame {
   position: relative;
-  border: 1px solid rgba(212, 175, 55, 0.5);
-  box-shadow: 0 4px 20px -2px rgba(19, 36, 70, 0.05);
+  background-color: #FFFFFF;
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  box-shadow: 
+    0 20px 45px -15px rgba(14, 27, 51, 0.07),
+    0 0 0 1px rgba(212, 175, 55, 0.15),
+    inset 0 0 0 4px #FFFFFF,
+    inset 0 0 0 5px rgba(212, 175, 55, 0.28);
+  border-radius: 1.75rem;
 }
 
-.invitation-frame::before {
+.invitation-frame-sm {
+  position: relative;
+  background-color: #FFFFFF;
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  box-shadow: 
+    0 12px 30px -10px rgba(14, 27, 51, 0.05),
+    0 0 0 1px rgba(212, 175, 55, 0.1),
+    inset 0 0 0 3px #FFFFFF,
+    inset 0 0 0 4px rgba(212, 175, 55, 0.22);
+  border-radius: 1.25rem;
+}
+
+/* Botones nupciales de lujo con micro-shimmer y acabados de oro y noche */
+.btn-gold {
+  position: relative;
+  border: 1px solid #D4AF37 !important;
+  background: linear-gradient(135deg, #0E1B33 0%, #16284C 100%);
+  color: #FFFFFF;
+  box-shadow: 0 8px 24px -4px rgba(14, 27, 51, 0.25), 0 0 0 1px rgba(212, 175, 55, 0.3);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+}
+
+.btn-gold::after {
   content: '';
   position: absolute;
-  inset: 5px;
-  border: 1px solid rgba(212, 175, 55, 0.25);
-  pointer-events: none;
-  border-radius: inherit;
-}
-
-/* Botones nupciales con borde dorado de lujo */
-.btn-gold {
-  border: 2px solid #D4AF37 !important;
-  background-color: #132446;
-  color: #FFFFFF;
-  box-shadow: 0 4px 14px rgba(212, 175, 55, 0.22);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transform: skewX(-25deg);
+  transition: 0.75s ease-in-out;
 }
 
 .btn-gold:hover {
-  background-color: #1E3566;
-  border-color: #E5C158 !important;
-  box-shadow: 0 6px 20px rgba(212, 175, 55, 0.38);
+  background: linear-gradient(135deg, #16284C 0%, #1F3663 100%);
+  border-color: #EED172 !important;
+  box-shadow: 0 12px 30px -4px rgba(212, 175, 55, 0.35), 0 0 0 1px rgba(212, 175, 55, 0.5);
   transform: translateY(-2px);
 }
 
+.btn-gold:hover::after {
+  left: 140%;
+}
+
 .btn-gold-light {
-  border: 2px solid rgba(212, 175, 55, 0.8) !important;
+  border: 1px solid rgba(212, 175, 55, 0.65) !important;
   background-color: #FFFFFF;
-  color: #132446;
-  box-shadow: 0 2px 10px rgba(212, 175, 55, 0.12);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  color: #0E1B33;
+  box-shadow: 0 4px 16px -2px rgba(14, 27, 51, 0.06), 0 0 0 1px rgba(212, 175, 55, 0.15);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-gold-light:hover {
   border-color: #D4AF37 !important;
-  background-color: #FAF7F2;
-  box-shadow: 0 4px 16px rgba(212, 175, 55, 0.25);
+  background-color: #FCFBF7;
+  color: #0E1B33;
+  box-shadow: 0 8px 24px -2px rgba(212, 175, 55, 0.22);
   transform: translateY(-2px);
 }
 
-/* Glassmorphism & Luxury Navy / Gold effects con fondo blanco */
-.glass-panel {
-  background: rgba(255, 255, 255, 0.94);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(212, 175, 55, 0.4);
+/* Efectos de tipografía dorada y azul rey */
+.gold-foil-text {
+  background: linear-gradient(135deg, #DFBA49 0%, #F5DE88 25%, #C29B27 60%, #E8C860 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 1px 1px rgba(212, 175, 55, 0.2));
 }
 
-.glass-panel-navy {
-  background: rgba(19, 36, 70, 0.95);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(212, 175, 55, 0.5);
-  color: #FFFFFF;
-}
-
-.gold-gradient-text {
-  background: linear-gradient(135deg, #D4AF37 0%, #E5C158 50%, #B89230 100%);
+.navy-royal-text {
+  background: linear-gradient(135deg, #0E1B33 0%, #16284C 60%, #070E1A 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
-.navy-gradient-text {
-  background: linear-gradient(135deg, #132446 0%, #1E3566 60%, #0A1325 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+/* Reglas divisorias de oro imperial */
+.gold-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  width: 100%;
 }
 
-.gold-border {
-  border-color: rgba(212, 175, 55, 0.55);
+.gold-divider::before,
+.gold-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.45), transparent);
 }
 
-/* Animaciones botánicas orgánicas y sutiles (sin ruido visual) */
+/* Animaciones botánicas orgánicas y sutiles */
 @keyframes sway-slow {
   0%, 100% {
     transform: rotate(0deg) translate(0, 0);
@@ -160,31 +201,18 @@
     transform: translateY(0px);
   }
   50% {
-    transform: translateY(-5px);
-  }
-}
-
-@keyframes gold-gleam {
-  0%, 100% {
-    filter: drop-shadow(0 0 2px rgba(212, 175, 55, 0.2));
-  }
-  50% {
-    filter: drop-shadow(0 0 8px rgba(212, 175, 55, 0.45));
+    transform: translateY(-4px);
   }
 }
 
 .animate-sway-slow {
-  animation: sway-slow 8s ease-in-out infinite;
+  animation: sway-slow 10s ease-in-out infinite;
 }
 
 .animate-sway-reverse {
-  animation: sway-reverse 9s ease-in-out infinite;
+  animation: sway-reverse 11s ease-in-out infinite;
 }
 
 .animate-float-delicate {
   animation: float-delicate 6s ease-in-out infinite;
-}
-
-.animate-gold-gleam {
-  animation: gold-gleam 4s ease-in-out infinite;
 }
